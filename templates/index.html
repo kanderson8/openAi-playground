@@ -1,21 +1,21 @@
 <!DOCTYPE html>
-<head>
-  <title>OpenAI Quickstart</title>
-  <link
-    rel="shortcut icon"
-    href="{{ url_for('static', filename='dog.png') }}"
-  />
-  <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}" />
-</head>
 
-<body>
-  <img src="{{ url_for('static', filename='dog.png') }}" class="icon" />
-  <h3>Name my pet</h3>
-  <form action="/" method="post">
-    <input type="text" name="animal" placeholder="Enter an animal" required />
-    <input type="submit" value="Generate names" />
+{% extends "base.html" %}
+
+{% block content %}
+  <h3 style='color: #ccc;font-size: 30px;' id="greeting">No message yet..</h3>
+  <div id="message_holder"></div>
+
+  <form action="/" method="POST">
+    <input type="text" name="message" placeholder="Enter a Message" required/>
+    <input type="submit" value="SEND"/>
   </form>
+
   {% if result %}
-  <div class="result">{{ result }}</div>
+    <script>
+      $( '#greeting' ).remove()
+      var result = "{{ result|replace('\n', '\\n')|replace('\'', '\\\'')  }}";
+      $('#message_holder').append( result );
+    </script>
   {% endif %}
-</body>
+{% endblock content %}
